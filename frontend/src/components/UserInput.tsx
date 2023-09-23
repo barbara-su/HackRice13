@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 interface UserInputProps {
-  onSendMessage: (message: string) => void;
+  onSendMessage: (message: string, sender: string) => void;
 }
 
 async function fetchResponse() {
@@ -15,9 +15,9 @@ function UserInput({ onSendMessage }: UserInputProps) {
 
   async function handleSendMessage() {
     if (message.trim() !== "") {
-      onSendMessage(message);
+      onSendMessage(message, "user");
       const assistantContent = await fetchResponse();
-      onSendMessage(assistantContent);
+      onSendMessage(assistantContent, "assistant");
       setMessage("");
     }
   }
