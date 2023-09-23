@@ -3,19 +3,42 @@
 body {
   background-color: #EEEEDD;
   font-family: 'Karla', sans-serif;
+  overflow: hidden;
 }
+
+.chat-container-1{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 25px;
+}
+
 
 .chat-container {
   background-color: #f7f7f7;
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 20px;
-  max-width: 400px;
+  width: 400px;
+  height: calc(100vh - 220px);
   margin: 0 auto;
   overflow-y: scroll;
-  height: 300px;
+}
+
+.user-input{
+  margin: auto;
+  margin-top: 0;
   display: flex;
-  flex-direction: column;
+  height: 50px;
+  width: 440px;
+}
+
+.user-input textarea{
+  width: calc(440px - 60px);
+}
+.send-button{
+  font-style: italic;
+  width: 60px;
 }
 
 .user {
@@ -36,8 +59,3 @@ body {
   max-width: 70%;
 }
 
-.user-input{
-  height: 100px;
-  position: fixed;
-  transform: translateY(350px);
-}

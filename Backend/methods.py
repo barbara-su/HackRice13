@@ -8,4 +8,4 @@ def str_to_txt(path, content):
     # Write the text to the file
         file.write(content)
 
-# txt_to_str("./Books/frank_test.txt")
+txt_to_str("./Books/frank_test.txt")

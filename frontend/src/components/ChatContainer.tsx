@@ -38,10 +38,13 @@ function ChatContainer() {
   }, [messages]);
 
   return (
-    <div className="chat-container">
-      <MessageList messages={messages} />
+    <div className='chat-container-1'>
+      <div className="chat-container">
+        <MessageList messages={messages} />
+      </div>
       <UserInput onSendMessage={onSendMessage} />
     </div>
+    
   );
 }
 
