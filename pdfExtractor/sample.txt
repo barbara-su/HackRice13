@@ -1,0 +1,137 @@
+CONTENTS
+
+PREFACE
+
+CHAPTER 1
+
+AN INTRODUCTION TO DATA MINING
+
+1
+
+1.1 What is Data Mining?
+1.2 Wanted: Data Miners
+1.3
+1.4
+
+2
+The Need for Human Direction of Data Mining
+The Cross-Industry Standard Practice for Data Mining
+1.4.1 Crisp-DM: The Six Phases
+Fallacies of Data Mining
+
+1.5
+1.6 What Tasks Can Data Mining Accomplish?
+
+5
+
+6
+
+3
+
+8
+
+4
+
+8
+
+8
+
+10
+
+1.6.1 Description
+1.6.2 Estimation
+1.6.3 Prediction
+1.6.4 Classification
+1.6.5 Clustering
+1.6.6 Association
+References
+Exercises
+
+14
+
+15
+
+10
+
+12
+
+14
+
+CHAPTER 2 DATA PREPROCESSING
+
+17
+
+26
+
+23
+
+19
+
+22
+
+22
+
+Data Transformation
+
+Data Cleaning
+Handling Missing Data
+Identifying Misclassifications
+Graphical Methods for Identifying Outliers
+
+2.1 Why do We Need to Preprocess the Data?
+2.2
+17
+2.3
+2.4
+2.5
+2.6 Measures of Center and Spread
+2.7
+26
+2.8 Min-Max Normalization
+Z-Score Standardization
+2.9
+2.10 Decimal Scaling
+2.11 Transformations to Achieve Normality
+28
+2.12 Numerical Methods for Identifying Outliers
+2.13
+36
+2.14 Transforming Categorical Variables into Numerical Variables
+2.15 Binning Numerical Variables
+2.16 Reclassifying Categorical Variables
+2.17 Adding an Index Field
+2.18 Removing Variables that are Not Useful
+2.19 Variables that Should Probably Not Be Removed
+2.20 Removal of Duplicate Records
+
+Flag Variables
+
+28
+
+35
+
+27
+
+39
+
+39
+
+39
+
+41
+
+38
+
+40
+
+xi
+
+1
+
+16
+
+v
+
+37
+
+

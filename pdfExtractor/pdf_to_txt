@@ -1,0 +1,10 @@
+import fitz
+doc = fitz.open("some.pdf")
+header = "Header"  # text in header
+footer = "Page %i of %i"  # text in footer
+for page in doc:
+    page.insert_text((50, 50), header)  # insert header
+    page.insert_text(  # insert footer 50 points above page bottom
+        (50, page.rect.height - 50),
+        footer % (page.number + 1, doc.page_count),
+    )
