@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface UserInputProps {
   onSendMessage: (message: string, sender: string) => void;
@@ -20,6 +20,12 @@ function UserInput({ onSendMessage }: UserInputProps) {
       onSendMessage(assistantContent, "assistant");
       setMessage("");
     }
+  }
+
+  async function fetchResponse() {
+    const response = await fetch("http://localhost:8888/");
+    const content = JSON.parse(JSON.stringify(response));
+    return content;
   }
 
   return (
