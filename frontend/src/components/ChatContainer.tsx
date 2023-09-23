@@ -7,8 +7,9 @@ function ChatContainer() {
   const [messages, setMessages] = useState<MessageProps[]>([]);
 
   const onSendMessage = (message: string) => {
-    const newMessage: MessageProps = { text: message, isUser: true };
+    const newMessage = { role: "user", content: message };
     setMessages([...messages, newMessage]);
+    console.log(messages);
   };
 
   return (

@@ -16,7 +16,7 @@ body {
   max-height: 300px;
 }
 
-.user-message {
+.user {
   background-color: #0074d9;
   color: #fff;
   border-radius: 10px;
@@ -25,7 +25,7 @@ body {
   max-width: 70%;
 }
 
-.bot-message {
+.assistant {
   background-color: #eee;
   color: #333;
   border-radius: 10px;
