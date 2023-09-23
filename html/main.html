@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Recorder</title>
+</head>
+<body>
+    <h1>Voice Recorder</h1>
+    <button id="startRecord">Start Recording</button>
+    <button id="stopRecord" disabled>Stop Recording</button>
+    <input type="text" id="saveLocation" placeholder="Enter file name (e.g., audio.mp3)">
+    <button id="saveAudio" disabled>Save as MP3</button>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+
+        document.getElementById('startRecord').addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
+                };
+
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    document.getElementById('saveAudio').disabled = false;
+
+                    document.getElementById('saveAudio').addEventListener('click', () => {
+                        const fileName = document.getElementById('saveLocation').value || 'recorded_audio.mp3';
+                        const a = document.createElement('a');
+                        a.href = URL.createObjectURL(audioBlob);
+                        a.download = fileName;
+                        a.style.display = 'none';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    });
+                };
+
+                mediaRecorder.start();
+                document.getElementById('startRecord').disabled = true;
+                document.getElementById('stopRecord').disabled = false;
+            } catch (error) {
+                console.error('Error accessing the microphone:', error);
+            }
+        });
+
+        document.getElementById('stopRecord').addEventListener('click', () => {
+            mediaRecorder.stop();
+            document.getElementById('startRecord').disabled = false;
+            document.getElementById('stopRecord').disabled = true;
+        });
+    </script>
+</body>
+</html>
