@@ -4,15 +4,23 @@ interface UserInputProps {
   onSendMessage: (message: string) => void;
 }
 
+async function fetchResponse() {
+  const response = await fetch("http://localhost:8000/");
+  const content = JSON.parse(JSON.stringify(response));
+  return content;
+}
+
 function UserInput({ onSendMessage }: UserInputProps) {
   const [message, setMessage] = useState<string>("");
 
-  const handleSendMessage = () => {
+  async function handleSendMessage() {
     if (message.trim() !== "") {
       onSendMessage(message);
+      const assistantContent = await fetchResponse();
+      onSendMessage(assistantContent);
       setMessage("");
     }
-  };
+  }
 
   return (
     <div className="user-input">
