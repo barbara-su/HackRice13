@@ -1,16 +1,21 @@
 import MessageList from "./MessageList";
 import UserInput from "./UserInput";
 import { MessageProps } from "./Message";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function ChatContainer() {
   const [messages, setMessages] = useState<MessageProps[]>([]);
 
+  
   const onSendMessage = (message: string) => {
     const newMessage = { role: "user", content: message };
-    setMessages([...messages, newMessage]);
-    console.log(messages);
+    // console.log("newmsg", newMessage);
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
   };
+
+  useEffect(() => {
+    console.log("Updated messages", messages);
+  }, [messages]);
 
   return (
     <div className="chat-container">
