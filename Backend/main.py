@@ -26,6 +26,8 @@ class MainHandler(BaseHandler):
     def post(self):
         dct = json.loads(self.request.body.decode("utf-8"))
         past_msg = dct["messages"]
+
+        print("past_msg", past_msg)
         title = dct["title"]
         file_content = mtd.txt_to_str("./Books/" + title + ".txt")
 
@@ -35,8 +37,6 @@ class MainHandler(BaseHandler):
 
 
         past_msg.insert(0, starter_msg)
-
-        print(past_msg)
 
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
