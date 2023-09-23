@@ -27,8 +27,8 @@ function ChatContainer() {
     xhr.send(data);
   };
 
-  const onSendMessage = (message: string) => {
-    const newMessage = { role: "user", content: message };
+  const onSendMessage = (message: string, sender: string) => {
+    const newMessage = { role: sender, content: message };
     setMessages((prevMessages) => [...prevMessages, newMessage]);
   };
 
