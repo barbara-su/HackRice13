@@ -2,6 +2,6 @@
 import openai
 
 openai.api_key = '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'
-audio_file= open("Emotional_Damage.mp3", "rb")
+audio_file= open("tst2.mp3", "rb")
 transcript = openai.Audio.translate("whisper-1", audio_file)
 print(transcript)
