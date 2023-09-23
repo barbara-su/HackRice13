@@ -1,7 +1,6 @@
 def txt_to_str(path):
     with open(path, 'rb') as file:
         file_contents = str(file.read())
-    print(file_contents)
     return file_contents
 
 def str_to_txt(path, content):
