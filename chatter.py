@@ -11,7 +11,7 @@ try:
 except:
     print("no prev message")
 
-json_file = json_process.json_to_str("HackRice13/tst.json")
+json_file = json_process.json_to_str("tst.json")
 
 if len(tst_msg) > 0:
     messages = tst_msg
@@ -32,7 +32,6 @@ while True:
         answer = response["choices"][0]["message"]["content"]
 
         messages = update_message(messages, "assistant", answer)
-        #print(messages)
         print(answer)
     except KeyboardInterrupt:
         break
