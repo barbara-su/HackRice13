@@ -5,12 +5,29 @@ import openai
 openai.api_key = "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"
 
 # Define a request handler
-class MainHandler(tornado.web.RequestHandler):
+class BaseHandler(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        print('set headers!!')
+        self.set_header('Access-Control-Allow-Origin', '*')
+        self.set_header('Access-Control-Allow-Headers', '*')
+        self.set_header('Access-Control-Max-Age', 1000)
+        self.set_header('Content-type', 'application/json')
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header('Access-Control-Allow-Headers',
+                        'Content-Type, Access-Control-Allow-Origin, Access-Control-Allow-Headers, X-Requested-By, Access-Control-Allow-Methods')
+
+
+    def options(self):
+        pass
+
+class MainHandler(BaseHandler):
     def get(self):
         self.write("Hello, World!")
     def post(self):
         dct = json.loads(self.request.body.decode("utf-8"))
+        print("dct", dct)
         past_msg = dct["past_msg"]
+        print("tstmsg!!!!!!", past_msg)
         title = dct["title"]
         file_content = mtd.txt_to_str("Assets/" + title)
         starter_msg = [{"role": "system", "content": "This is a txt file, I will ask you question on that: " + file_content + \
@@ -27,7 +44,7 @@ class MainHandler(tornado.web.RequestHandler):
         answer = response["choices"][0]["message"]["content"]
         self.write(answer)
 
-class FileUpload(tornado.web.RequestHandler):
+class FileUpload(BaseHandler):
     def post(self):
         try:
             dct = json.loads(self.request.body.decode("utf-8"))
