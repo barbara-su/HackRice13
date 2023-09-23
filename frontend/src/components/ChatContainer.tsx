@@ -8,13 +8,13 @@ function ChatContainer() {
 
   const postResult = () => {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:5173/");
+    xhr.open("POST", "http://localhost:8888/");
     xhr.setRequestHeader("Content-Type", "application/json");
     let messageArr = [];
     for (let message of messages) {
       messageArr.push(message);
     }
-    const data = JSON.stringify({ title: "fronttest", messages: messageArr });
+    const data = JSON.stringify({ title: "frank_test", messages: messageArr });
     xhr.onreadystatechange = function () {
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if (xhr.status === 200) {

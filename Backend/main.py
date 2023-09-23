@@ -25,23 +25,28 @@ class MainHandler(BaseHandler):
         self.write("Hello, World!")
     def post(self):
         dct = json.loads(self.request.body.decode("utf-8"))
-        print("dct", dct)
-        past_msg = dct["past_msg"]
-        print("tstmsg!!!!!!", past_msg)
+        past_msg = dct["messages"]
         title = dct["title"]
-        file_content = mtd.txt_to_str("Assets/" + title)
-        starter_msg = [{"role": "system", "content": "This is a txt file, I will ask you question on that: " + file_content + \
+        file_content = mtd.txt_to_str("./Books/" + title + ".txt")
+
+        starter_msg = {"role": "system", "content": "This is a txt file, I will ask you question on that: " + file_content + \
                    "\n Your answer should strictly follow the txt file.\
-                    \n If I ask you things outside of the txt file, just supplement the answer with your own knowledge."}]      
+                    \n If I ask you things outside of the txt file, just supplement the answer with your own knowledge."}    
 
 
         past_msg.insert(0, starter_msg)
+
+        print(past_msg)
 
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=past_msg,
         )
+
         answer = response["choices"][0]["message"]["content"]
+
+        print()
+        print(answer)
         self.write(answer)
 
 class FileUpload(BaseHandler):
@@ -50,7 +55,7 @@ class FileUpload(BaseHandler):
             dct = json.loads(self.request.body.decode("utf-8"))
             title = dct["title"]
             content = dct["content"]
-            path = "Books/" + title
+            path = "./Books/" + title + ".txt"
             mtd.str_to_txt(content, path)
             self.set_status(200)
             self.write("success")
@@ -61,8 +66,7 @@ class FileUpload(BaseHandler):
 def make_app():
     return tornado.web.Application([
         (r'/', MainHandler),
-        (r"/Books/(.*)", tornado.web.StaticFileHandler,
-        {"path": "./Books"})
+        (r'/static/(.*)', tornado.web.StaticFileHandler, {'path': './Books/'}),
     ], debug=True)
 
 if __name__ == "__main__":
