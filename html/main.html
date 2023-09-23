@@ -1,58 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-time Voice Recognizer</title>
-</head>
-<body>
-    <h1>Real-time Voice Recognizer</h1>
-    <button id="startRecognition">Start Recognition</button>
-    <button id="stopRecognition" disabled>Stop Recognition</button>
-    <p id="recognizedText"></p>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Real-time Voice Recognizer</title>
+    </head>
+    <body>
+        <h1>Real-time Voice Recognizer</h1>
+        <button id="startRecognition">Start Recognition</button>
+        <button id="stopRecognition" disabled>Stop Recognition</button>
+        <p id="recognizedText"></p>
 
-    <script>
-        let recognition;
+        <script>
+            let recognition;
 
-        document.getElementById('startRecognition').addEventListener('click', () => {
-            // Initialize SpeechRecognition object
-            recognition = new webkitSpeechRecognition(); // For Chrome
-            // recognition = new SpeechRecognition(); // For other browsers
+            document.getElementById('startRecognition').addEventListener('click', () => {
+                // Initialize SpeechRecognition object
+                recognition = new webkitSpeechRecognition(); // For Chrome
+                // recognition = new SpeechRecognition(); // For other browsers
 
-            recognition.lang = 'en-US'; // Set the language to English
+                recognition.lang = 'en-US'; // Set the language to English
 
-            recognition.onstart = () => {
-                console.log('Recognition started.');
-                document.getElementById('startRecognition').disabled = true;
-                document.getElementById('stopRecognition').disabled = false;
-            };
+                recognition.onstart = () => {
+                    console.log('Recognition started.');
+                    document.getElementById('startRecognition').disabled = true;
+                    document.getElementById('stopRecognition').disabled = false;
+                };
 
-            recognition.onresult = (event) => {
-                const result = event.results[event.results.length - 1][0].transcript;
-                document.getElementById('recognizedText').textContent = result;
-            };
+                recognition.onresult = (event) => {
+                    const result = event.results[event.results.length - 1][0].transcript;
+                    document.getElementById('recognizedText').textContent = result;
+                };
 
-            recognition.onend = () => {
-                console.log('Recognition ended.');
-                document.getElementById('startRecognition').disabled = false;
-                document.getElementById('stopRecognition').disabled = true;
-            };
+                recognition.onend = () => {
+                    console.log('Recognition ended.');
+                    document.getElementById('startRecognition').disabled = false;
+                    document.getElementById('stopRecognition').disabled = true;
+                };
 
-            recognition.onerror = (event) => {
-                console.error('Recognition error:', event.error);
-            };
+                recognition.onerror = (event) => {
+                    console.error('Recognition error:', event.error);
+                };
 
-            recognition.start();
-        });
+                recognition.start();
+            });
 
-        document.getElementById('stopRecognition').addEventListener('click', () => {
-            if (recognition) {
-                recognition.stop();
-                console.log('Recognition stopped.');
-                document.getElementById('startRecognition').disabled = false;
-                document.getElementById('stopRecognition').disabled = true;
+            document.getElementById('stopRecognition').addEventListener('click', () => {
+                if (recognition) {
+                    recognition.stop();
+                    console.log('Recognition stopped.');
+                    document.getElementById('startRecognition').disabled = false;
+                    document.getElementById('stopRecognition').disabled = true;
+                }
+            });
+
+            function sendRecognitionResult(result) {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'http://localhost:8888/'); // Replace with your server's URL
+                xhr.setRequestHeader('Content-Type', 'application/json');
+
+                const data = JSON.stringify({
+                    recognized_text: result
+                });
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            console.log('Recognition result sent successfully');
+                        } else {
+                            console.error('Error sending recognition result:', xhr.status, xhr.statusText);
+                        }
+                    }
+                };
+
+                xhr.send(data);
             }
-        });
-    </script>
-</body>
+        </script>
+    </body>
 </html>
