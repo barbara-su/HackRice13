@@ -1,5 +1,42 @@
 {
-    "name": "John",
-    "age": 30,
-    "city": "New York"
+	"book": {
+		"title": "Quadratic Formula",
+		"sections": [
+			{
+				"title": "tst"
+			}
+		]
+	},
+	"glossary": [
+		{
+			"term": "equation",
+			"synonyms": ["formula"],
+			"definition": "An equation is a statement that expresses the idea that two mathematical {expressions} are equal."
+		},
+		{
+			"term": "equation",
+			"synonyms": ["formula"],
+			"definition": "An equation is a statement that expresses the idea that two mathematical {expressions} are equal."
+		},
+		{
+			"term": "expression",
+			"synonyms": [],
+			"definition": "In this class, you can think of an expression as something like a number, {sum} of numbers, {product} of numbers, et cetera. It could also involve {variables} whose values are unknown."
+		},
+		{
+			"term": "sum",
+			"synonyms": ["addition"],
+			"definition": "A sum is the result of adding numbers."
+		},
+		{
+			"term": "product",
+			"synonyms": ["multiplication"],
+			"definition": "A product is the result of multiplying numbers."
+		},
+		{
+			"term": "variable",
+			"synonyms": ["unknown"],
+			"definition": "A variable is a symbol that represents a number."
+		}
+	]
 }

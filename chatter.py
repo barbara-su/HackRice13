@@ -13,9 +13,11 @@ except:
 
 json_file = json_process.json_to_str("tst.json")
 
+print(json_file)
+
 if len(tst_msg) > 0:
     messages = tst_msg
-else: messages = [{"role": "system", "content": "This is a json file, I will ask you question on that: " + json_file}]
+else: messages = [{"role": "system", "content": "This is a json file, I will ask you question on that: " + json_file + ". Your answer should strictly follow the json file."}]
 
 def update_message(messages, role, content):
     messages.append({"role": role, "content": content})
@@ -36,4 +38,4 @@ while True:
     except KeyboardInterrupt:
         break
 
-pickle.dump(messages,open( "tst/save.p", "wb" ))
+# pickle.dump(messages,open( "tst/save.p", "wb" ))
