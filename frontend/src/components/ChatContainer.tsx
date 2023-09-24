@@ -25,19 +25,13 @@ function ChatContainer() {
       },
       body: JSON.stringify({ title: "frank_test", messages: messages }),
     };
-    const getParams = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
 
     async function postResult() {
       try {
         await fetch("http://localhost:8888/", postParams); // Prompt model w/ message history
         const res = await fetch("http://localhost:8888/"); // Get model's response
         const resData = await res.json();
-        const resString = JSON.stringify(resData).replace(/\\n/g, "\n");
+        const resString = JSON.stringify(resData);
         onSendMessage(resString, "assistant");
       } catch (error) {
         throw error;
