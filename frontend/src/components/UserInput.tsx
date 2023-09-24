@@ -1,5 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
+interface UserInputProps {
+  onSendMessage: (message: string, sender: string) => void;
+}
 
 declare global {
   interface Window {
@@ -8,58 +11,53 @@ declare global {
   }
 }
 
-interface UserInputProps {
-  onSendMessage: (message: string, sender: string) => void;
-}
-
 function UserInput({ onSendMessage }: UserInputProps) {
   const [message, setMessage] = useState<string>("");
-  const [isListening, setIsListening] = useState<boolean>(false);
-  const recognitionRef = useRef<any>(null);
+  const [listening, setListening] = useState<boolean>(false);
+  const recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-  
   useEffect(() => {
-    if (window.SpeechRecognition || window.webkitSpeechRecognition) {
-      const SpeechRecognition =
-        window.SpeechRecognition || window.webkitSpeechRecognition;
-      const recognition = new SpeechRecognition();
-
-      recognitionRef.current = recognition;
-
+    if (recognition) {
+      const recognitionInstance = new recognition();
       recognition.continuous = true;
-      recognition.interimResults = false;
+      recognition.interimResults = true;
 
-      recognition.onstart = () => {
-        setIsListening(true);
-      };
-
-      recognition.onresult = (event: any) => {
+      recognitionInstance.onresult = (event: any) => {
         const transcript = event.results[0][0].transcript;
-        setMessage((prevMessage) => prevMessage + transcript);
-      };
-      recognition.onend = () => {
-        setIsListening(false);
-        handleSendMessage();
+        setMessage(transcript);
+        handleSendMessage(transcript);
       };
 
-      recognition.onerror = (event: any) => {
-        console.error("Speech recognition error:", event.error);
-        setIsListening(false);
+      recognitionInstance.onend = () => {
+        if (listening) {
+          recognitionInstance.start();
+        }
+      };
+
+      recognitionInstance.start();
+      setListening(true);
+
+      return () => {
+        recognitionInstance.stop();
       };
     } else {
-      console.error("Speech recognition is not supported in this browser.");
+      console.error("Speech recognition not supported in this browser.");
     }
-  }, []);
+  }, [recognition]);
 
-  async function handleSendMessage() {
-    if (message.trim() !== "") {
-      onSendMessage(message, "user");
-      toggleListening();
+  const handleSendMessage = (text: string) => {
+    if (text.trim() !== "") {
+      onSendMessage(text, "user");
       setMessage("");
-      const assistantContent = await fetchResponse(message);
-      onSendMessage(assistantContent, "assistant");
+      fetchResponse(text)
+        .then((assistantContent) => {
+          onSendMessage(assistantContent, "assistant");
+        })
+        .catch((error) => {
+          console.error("Error fetching response:", error);
+        });
     }
-  }
+  };
 
   async function fetchResponse(message: string) {
     try {
@@ -87,25 +85,11 @@ function UserInput({ onSendMessage }: UserInputProps) {
     }
   }
 
-  const toggleListening = () => {
-    const recognition = recognitionRef.current;
-    if (recognition) {
-      if (isListening) {
-        recognition.stop();
-      } else {
-        recognition.start();
-      }
-    }
-  };
-
   return (
     <div className="user-input">
       <textarea value={message} onChange={(e) => setMessage(e.target.value)} />
       <button className="send-button" onClick={handleSendMessage}>
         Send
-      </button>
-      <button className="listen-button" onClick={toggleListening}>
-        {isListening ? "Stop Listening" : "Start Listening"}
       </button>
     </div>
   );
