@@ -14,16 +14,17 @@ declare global {
 function UserInput({ onSendMessage }: UserInputProps) {
   const [message, setMessage] = useState<string>("");
   const [listening, setListening] = useState<boolean>(false);
-  const recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
 
   useEffect(() => {
     if (recognition) {
       const recognitionInstance = new recognition();
       recognitionInstance.continuous = true;
       recognitionInstance.interimResults = false;
-  
+
       let finalTranscript = "";
-  
+
       recognitionInstance.onresult = (event: any) => {
         let interimTranscript = "";
         for (let i = event.resultIndex; i < event.results.length; i++) {
@@ -33,23 +34,21 @@ function UserInput({ onSendMessage }: UserInputProps) {
             interimTranscript = event.results[i][0].transcript;
           }
         }
-  
-        
+
         handleSendMessage(finalTranscript);
         setMessage("");
         finalTranscript = "";
       };
-  
+
       recognitionInstance.onend = () => {
         if (listening) {
           recognitionInstance.start();
         }
       };
-  
+
       recognitionInstance.start();
       setListening(true);
-  
-      // Return something else, e.g., a message or a function
+
       return () => {
         console.log("Cleanup function executed.");
       };
@@ -57,21 +56,13 @@ function UserInput({ onSendMessage }: UserInputProps) {
       console.error("Speech recognition not supported in this browser.");
     }
   }, [recognition]);
-  
 
-  const handleSendMessage = (text: string) => {
+  async function handleSendMessage(text: string) {
     if (text.trim() !== "") {
       onSendMessage(text, "user");
       setMessage("");
-      fetchResponse(text)
-        .then((assistantContent) => {
-          onSendMessage(assistantContent, "assistant");
-        })
-        .catch((error) => {
-          console.error("Error fetching response:", error);
-        });
     }
-  };
+  }
 
   async function fetchResponse(message: string) {
     try {
@@ -85,7 +76,7 @@ function UserInput({ onSendMessage }: UserInputProps) {
       const response = await fetch("https://localhost:8888/", params);
       if (response.ok) {
         const responseObj = await response.json();
-        console.log(responseObj)
+        console.log(responseObj);
         return responseObj;
       } else {
         console.error(
@@ -102,7 +93,7 @@ function UserInput({ onSendMessage }: UserInputProps) {
   return (
     <div className="user-input">
       <textarea value={message} onChange={(e) => setMessage(e.target.value)} />
-      <button className="send-button" onClick={() => handleSendMessage}>
+      <button className="send-button" onClick={(message) => handleSendMessage}>
         Send
       </button>
     </div>

@@ -7,7 +7,6 @@ openai.api_key = "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"
 # Define a request handler
 class BaseHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
-        print('set headers!!')
         self.set_header('Access-Control-Allow-Origin', '*')
         self.set_header('Access-Control-Allow-Headers', '*')
         self.set_header('Access-Control-Max-Age', 1000)
@@ -21,27 +20,18 @@ class BaseHandler(tornado.web.RequestHandler):
         pass
 
 class MainHandler(BaseHandler):
+    answer = ""
     def get(self):
-        self.write("Hello, World!")
+        self.write(json.dumps(MainHandler.answer))
     def post(self):
-
-        print("received request!!!!")
-
         dct = json.loads(self.request.body.decode("utf-8"))
-
-        past_msg = dct["messages"]
-
-        print("past_msg", past_msg)
-
-        past_msg = list(past_msg)
+        past_msg = list(dct["messages"])
         title = dct["title"]
         file_content = mtd.txt_to_str("./Books/" + title + ".txt")
 
         starter_msg = {"role": "system", "content": "This is a txt file, I will ask you question on that: " + file_content + \
                    "\n Your answer should strictly follow the txt file.\
                     \n If I ask you things outside of the txt file, just supplement the answer with your own knowledge."}    
-
-
         past_msg.insert(0, starter_msg)
 
         if len(past_msg) < 2:
@@ -55,9 +45,7 @@ class MainHandler(BaseHandler):
 
         answer = response["choices"][0]["message"]["content"]
 
-        print()
-        print(answer)
-        self.write(answer)
+        MainHandler.answer = answer
 
 class FileUpload(BaseHandler):
     def post(self):

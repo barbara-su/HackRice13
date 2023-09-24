@@ -72,6 +72,7 @@ body {
   margin-bottom: 10px;
   max-width: 70%;
   float:right;
+  font-size: 20px;
 }
 .user-row {
   width: 100%;
@@ -88,6 +89,7 @@ body {
   margin-bottom: 10px;
   max-width: 70%;
   float:left;
+  font-size: 20px;
 }
 .assistant-row {
   width: 100%;
@@ -119,4 +121,5 @@ textarea {
   color: var(--fg);
   border-radius: var(--round);
   border: 5px solid var(--fg);
+  resize: none;
 }
