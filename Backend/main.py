@@ -3,7 +3,7 @@ import json
 import methods as mtd
 import openai
 
-with open ("key.txt", "r") as f:
+with open ("key", "r") as f:
     openai.api_key = f.readline()
 
 # Define a request handler
