@@ -62,7 +62,7 @@ body {
   width: 60px;
 }
 
-.user {
+.user-msg {
   background-color: var(--fg);
   color: var(--bg);
   font-weight: bold;
@@ -71,9 +71,14 @@ body {
   padding: 10px;
   margin-bottom: 10px;
   max-width: 70%;
+  float:right;
+}
+.user-row {
+  width: 100%;
+  display: inline-block;
 }
 
-.assistant {
+.assistant-msg {
   background-color: var(--banterbook);
   color: var(--fg);
   font-weight: bold;
@@ -82,6 +87,11 @@ body {
   padding: 10px;
   margin-bottom: 10px;
   max-width: 70%;
+  float:left;
+}
+.assistant-row {
+  width: 100%;
+  display: inline-block;
 }
 
 button {
