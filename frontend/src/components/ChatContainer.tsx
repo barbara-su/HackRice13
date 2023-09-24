@@ -8,12 +8,14 @@ function ChatContainer() {
 
   const speak = (sentence: any) => {
     let utterance = new SpeechSynthesisUtterance();
-  
+
     utterance.text = sentence;
-    utterance.voice = window.speechSynthesis.getVoices().filter(voice => voice.lang == "en-US")[0];
-  
+    utterance.voice = window.speechSynthesis
+      .getVoices()
+      .filter((voice) => voice.lang == "en-US")[0];
+
     window.speechSynthesis.speak(utterance);
-  }
+  };
 
   function onSendMessage(message: string, sender: string) {
     const newMessage = { role: sender, content: message };
@@ -40,7 +42,10 @@ function ChatContainer() {
         await fetch("http://localhost:8888/", postParams); // Prompt model w/ message history
         const res = await fetch("http://localhost:8888/"); // Get model's response
         const resData = await res.json();
-        const resString = JSON.stringify(resData);
+        const resString = JSON.stringify(resData)
+          .replace(/\n/g, " ")
+          .replace(/^"|"$/g, "");
+        console.log(resString);
         speak(resString);
         onSendMessage(resString, "assistant");
       } catch (error) {
