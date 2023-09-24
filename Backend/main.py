@@ -33,8 +33,8 @@ class MainHandler(BaseHandler):
                    "\n Your answer should strictly follow the txt file.\
                     \n If I ask you things outside of the txt file, just supplement the answer with your own knowledge."}    
         
-        if len(past_msg) > 10:
-            past_msg = past_msg[:10]
+        if len(past_msg) > 5:
+            past_msg = past_msg[:5]
         past_msg.insert(0, starter_msg)
 
         
