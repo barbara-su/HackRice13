@@ -39,12 +39,6 @@ class MainHandler(BaseHandler):
             past_msg = past_msg[:5]
         past_msg.insert(0, starter_msg)
 
-        
-
-        # if len(past_msg) < 2:
-        #     initial_msg = {"role": "system", "content": "Summarize the book, make sure to list all sections. And please ask me what do I want."}
-        #     past_msg.insert(1, initial_msg)
-
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=past_msg,

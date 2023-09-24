@@ -28,6 +28,13 @@ body {
   overflow: hidden;
 }
 
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
 .chat-container-1{
   display: flex;
   flex-direction: column;
@@ -41,7 +48,7 @@ body {
   border-radius: var(--round);
   padding: 20px;
   width: 70%;
-  height: calc(100vh - 150px);
+  height: calc(100vh - 250px);
   margin: 0 auto;
   overflow-y: scroll;
 }
@@ -51,11 +58,12 @@ body {
   margin-top: 0;
   display: flex;
   height: 50px;
-  width: 440px;
+  width: 70%;
+  justify-content: center;
 }
 
 .user-input textarea{
-  width: calc(440px - 60px);
+  width: 70%;
 }
 .send-button{
   font-style: italic;
