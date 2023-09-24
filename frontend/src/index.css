@@ -1,7 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@300&display=swap');
 
+:root {
+  --fg: #332211;
+  --bg: #ffddaa;
+  --banterbook: #aaffff;
+  --round: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  border-radius: var(--round);
+  margin: 2px;
+}
+::-webkit-scrollbar-thumb {
+  background: #332211;
+  border-radius: var(--round);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #000000;
+}
+
 body {
-  background-color: #EEEEDD;
+  background-color: var(--bg);
   font-family: 'Karla', sans-serif;
   overflow: hidden;
 }
@@ -15,9 +37,8 @@ body {
 
 
 .chat-container {
-  background-color: #f7f7f7;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  background-color: var(--bg);
+  border-radius: var(--round);
   padding: 20px;
   width: 400px;
   height: calc(100vh - 220px);
@@ -42,20 +63,50 @@ body {
 }
 
 .user {
-  background-color: #0074d9;
-  color: #fff;
-  border-radius: 10px;
+  background-color: var(--fg);
+  color: var(--bg);
+  font-weight: bold;
+  border: 5px solid var(--fg);
+  border-radius: var(--round);
   padding: 10px;
   margin-bottom: 10px;
   max-width: 70%;
 }
 
 .assistant {
-  background-color: #eee;
-  color: #333;
-  border-radius: 10px;
+  background-color: var(--banterbook);
+  color: var(--fg);
+  font-weight: bold;
+  border: 5px solid var(--fg);
+  border-radius: var(--round);
   padding: 10px;
   margin-bottom: 10px;
   max-width: 70%;
 }
 
+button {
+  font-family: 'Karla', sans-serif;
+  font-weight: bold;
+  background-color: var(--fg);
+  color: var(--bg);
+  border-radius: var(--round);
+  border: 5px solid var(--fg);
+}
+button:hover {
+  filter: brightness(1.5);
+}
+button:active {
+  filter: brightness(1);
+  background-color: white;
+  color: black;
+}
+
+
+textarea {
+  font-family: 'Karla', sans-serif;
+  font-weight: bold;
+  background-color: white;
+  color: var(--fg);
+  border-radius: var(--round);
+  border: 5px solid var(--fg);
+}
