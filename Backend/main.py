@@ -2,7 +2,9 @@ import tornado
 import json
 import methods as mtd
 import openai
-openai.api_key = "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"
+
+with open ("key.txt", "r") as f:
+    openai.api_key = f.readline()
 
 # Define a request handler
 class BaseHandler(tornado.web.RequestHandler):
