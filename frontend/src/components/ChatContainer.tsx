@@ -6,6 +6,15 @@ import { useState, useEffect } from "react";
 function ChatContainer() {
   const [messages, setMessages] = useState<MessageProps[]>([]);
 
+  const speak = (sentence: any) => {
+    let utterance = new SpeechSynthesisUtterance();
+  
+    utterance.text = sentence;
+    utterance.voice = window.speechSynthesis.getVoices().filter(voice => voice.lang == "en-US")[0];
+  
+    window.speechSynthesis.speak(utterance);
+  }
+
   function onSendMessage(message: string, sender: string) {
     const newMessage = { role: sender, content: message };
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -32,6 +41,7 @@ function ChatContainer() {
         const res = await fetch("http://localhost:8888/"); // Get model's response
         const resData = await res.json();
         const resString = JSON.stringify(resData);
+        speak(resString);
         onSendMessage(resString, "assistant");
       } catch (error) {
         throw error;

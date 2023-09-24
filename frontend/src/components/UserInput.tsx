@@ -16,7 +16,9 @@ function UserInput({ onSendMessage }: UserInputProps) {
   const [listening, setListening] = useState<boolean>(false);
   const recognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
-
+  const shutUp = () => {
+    window.speechSynthesis.cancel();
+  }
   useEffect(() => {
     if (recognition) {
       const recognitionInstance = new recognition();
@@ -26,6 +28,7 @@ function UserInput({ onSendMessage }: UserInputProps) {
       let finalTranscript = "";
 
       recognitionInstance.onresult = (event: any) => {
+        shutUp();
         let interimTranscript = "";
         for (let i = event.resultIndex; i < event.results.length; i++) {
           if (event.results[i].isFinal) {
