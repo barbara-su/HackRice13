@@ -42,12 +42,13 @@ function ChatContainer() {
         await fetch("http://localhost:8888/", postParams); // Prompt model w/ message history
         const res = await fetch("http://localhost:8888/"); // Get model's response
         const resData = await res.json();
-        const resString = JSON.stringify(resData)
-          .replace(/\n/g, " ")
-          .replace(/^"|"$/g, "");
-        console.log(resString);
-        speak(resString);
-        onSendMessage(resString, "assistant");
+        console.log("resData", resData);
+        // const resString = JSON.stringify(resData)
+        //   .replace(/\n/g, " ")
+        //   .replace(/^"|"$/g, "");
+        // console.log(resString);
+        speak(resData);
+        onSendMessage(resData, "assistant");
       } catch (error) {
         throw error;
       }
