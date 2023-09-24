@@ -24,10 +24,16 @@ class MainHandler(BaseHandler):
     def get(self):
         self.write("Hello, World!")
     def post(self):
+
+        print("received request!!!!")
+
         dct = json.loads(self.request.body.decode("utf-8"))
+
         past_msg = dct["messages"]
 
         print("past_msg", past_msg)
+
+        past_msg = list(past_msg)
         title = dct["title"]
         file_content = mtd.txt_to_str("./Books/" + title + ".txt")
 
@@ -37,6 +43,10 @@ class MainHandler(BaseHandler):
 
 
         past_msg.insert(0, starter_msg)
+
+        if len(past_msg) < 2:
+            initial_msg = {"role": "system", "content": "Summarize the book, make sure to list all sections. And please ask me what do I want."}
+            past_msg.insert(1, initial_msg)
 
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
