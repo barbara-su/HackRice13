@@ -40,7 +40,7 @@ body {
   background-color: var(--bg);
   border-radius: var(--round);
   padding: 20px;
-  width: 400px;
+  width: 70%;
   height: calc(100vh - 220px);
   margin: 0 auto;
   overflow-y: scroll;
@@ -92,8 +92,9 @@ body {
   font-size: 20px;
 }
 .assistant-row {
+  display: flex;
+  align-items: left;
   width: 100%;
-  display: inline-block;
 }
 
 button {
