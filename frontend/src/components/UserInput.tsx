@@ -16,9 +16,7 @@ function UserInput({ onSendMessage }: UserInputProps) {
   const [listening, setListening] = useState<boolean>(false);
   const recognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
-  const shutUp = () => {
-    window.speechSynthesis.cancel();
-  }
+
   useEffect(() => {
     if (recognition) {
       const recognitionInstance = new recognition();
@@ -28,7 +26,7 @@ function UserInput({ onSendMessage }: UserInputProps) {
       let finalTranscript = "";
 
       recognitionInstance.onresult = (event: any) => {
-        shutUp();
+        window.speechSynthesis.cancel();
         let interimTranscript = "";
         for (let i = event.resultIndex; i < event.results.length; i++) {
           if (event.results[i].isFinal) {
@@ -64,32 +62,6 @@ function UserInput({ onSendMessage }: UserInputProps) {
     if (text.trim() !== "") {
       onSendMessage(text, "user");
       setMessage("");
-    }
-  }
-
-  async function fetchResponse(message: string) {
-    try {
-      const params = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message }),
-      };
-      const response = await fetch("https://localhost:8888/", params);
-      if (response.ok) {
-        const responseObj = await response.json();
-        console.log(responseObj);
-        return responseObj;
-      } else {
-        console.error(
-          "Error sending result!",
-          response.status,
-          response.statusText
-        );
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
     }
   }
 
