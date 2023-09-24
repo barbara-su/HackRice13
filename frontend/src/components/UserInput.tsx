@@ -96,7 +96,7 @@ function UserInput({ onSendMessage }: UserInputProps) {
   return (
     <div className="user-input">
       <textarea value={message} onChange={(e) => setMessage(e.target.value)} />
-      <button className="send-button" onClick={(message) => handleSendMessage}>
+      <button className="send-button" onClick={() => handleSendMessage(message)}>
         Send
       </button>
     </div>
