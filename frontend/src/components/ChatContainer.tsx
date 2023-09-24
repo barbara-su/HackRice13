@@ -1,7 +1,7 @@
+import { useState, useEffect } from "react";
 import MessageList from "./MessageList";
 import UserInput from "./UserInput";
 import { MessageProps } from "./Message";
-import { useState, useEffect } from "react";
 
 function ChatContainer() {
   const [messages, setMessages] = useState<MessageProps[]>([]);
