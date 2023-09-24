@@ -19,31 +19,45 @@ function UserInput({ onSendMessage }: UserInputProps) {
   useEffect(() => {
     if (recognition) {
       const recognitionInstance = new recognition();
-      recognition.continuous = true;
-      recognition.interimResults = true;
-
+      recognitionInstance.continuous = true;
+      recognitionInstance.interimResults = false;
+  
+      let finalTranscript = "";
+  
       recognitionInstance.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript;
-        setMessage(transcript);
-        handleSendMessage(transcript);
+        let interimTranscript = "";
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          if (event.results[i].isFinal) {
+            finalTranscript = event.results[i][0].transcript;
+          } else {
+            interimTranscript = event.results[i][0].transcript;
+          }
+        }
+  
+        
+        handleSendMessage(finalTranscript);
+        setMessage("");
+        finalTranscript = "";
       };
-
+  
       recognitionInstance.onend = () => {
         if (listening) {
           recognitionInstance.start();
         }
       };
-
+  
       recognitionInstance.start();
       setListening(true);
-
+  
+      // Return something else, e.g., a message or a function
       return () => {
-        recognitionInstance.stop();
+        console.log("Cleanup function executed.");
       };
     } else {
       console.error("Speech recognition not supported in this browser.");
     }
   }, [recognition]);
+  
 
   const handleSendMessage = (text: string) => {
     if (text.trim() !== "") {
